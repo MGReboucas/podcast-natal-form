@@ -1,34 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "sqlite"
-}
-
-enum TipoPodcast {
-  SOLO
-  ENTREVISTA
-  BATE_PAPO
-  INDEFINIDO
-}
-
-enum Interesse {
-  UNICO
-  MENSAL
+  url      = env("DATABASE_URL")
 }
 
 model Lead {
-  id           Int          @id @default(autoincrement())
-  name         String       
-  whatsapp     String       
+  id           Int      @id @default(autoincrement())
+  name         String
+  whatsapp     String
 
-  tipoPodcast  TipoPodcast
+  // antes era TipoPodcast (enum)
+  tipoPodcast  String
+
   temLogo      Boolean
 
-  interesse    Interesse
+  // antes era Interesse (enum)
+  interesse    String
 
   horas        Int?
   vezesMes     Int?
   horasSessao  Int?
 
-  horario      String?      
-
-  createdAt    DateTime     @default(now())
+  horario      String?
+  createdAt    DateTime @default(now())
 }
