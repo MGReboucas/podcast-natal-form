@@ -1,0 +1,34 @@
+datasource db {
+  provider = "sqlite"
+}
+
+enum TipoPodcast {
+  SOLO
+  ENTREVISTA
+  BATE_PAPO
+  INDEFINIDO
+}
+
+enum Interesse {
+  UNICO
+  MENSAL
+}
+
+model Lead {
+  id           Int          @id @default(autoincrement())
+  name         String       
+  whatsapp     String       
+
+  tipoPodcast  TipoPodcast
+  temLogo      Boolean
+
+  interesse    Interesse
+
+  horas        Int?
+  vezesMes     Int?
+  horasSessao  Int?
+
+  horario      String?      
+
+  createdAt    DateTime     @default(now())
+}
