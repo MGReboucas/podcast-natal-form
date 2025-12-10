@@ -94,9 +94,8 @@ export default function HomePage() {
   const isInteresseMensal = form.interesse === 'MENSAL'
 
   return (
-    <main className="min-h-screen bg-background text-foreground flex items-center justify-center px-4 py-10">
+    <main className="min-h-screen bg-brand-blue text-foreground flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-4xl bg-white rounded-3xl shadow-[0_18px_45px_rgba(0,0,0,0.12)] border border-brand-sand-soft overflow-hidden flex flex-col md:flex-row">
-        {/* LADO ESQUERDO – logo + texto */}
         <div className="md:w-5/12 bg-brand-sand-soft p-6 md:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-brand-sand">
           <div>
             <div className="flex items-center gap-3 mb-4">
@@ -130,6 +129,16 @@ export default function HomePage() {
               <li>• Câmeras 4K, microfones premium e ambiente tratado</li>
               <li>• Orientação para quem nunca gravou podcast</li>
             </ul>
+
+            <a
+              href="https://wa.me/5584998045201?text=Ol%C3%A1%2C%20acabei%20de%20acessar%20o%20seu%20link%20e%20fiquei%20com%20uma%20d%C3%BAvida%20sobre%20o%20Podcast%20Natal."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block px-8 py-3 rounded-full text-white !text-white text-sm font-medium shadow 
+             bg-[#25D366] hover:bg-[#128C7E] transition"
+            >
+              Dúvidas? Fale conosco no WhatsApp
+            </a>
           </div>
 
           <p className="mt-6 text-[11px] text-slate-600">
@@ -180,22 +189,24 @@ export default function HomePage() {
                   { key: 'ENTREVISTA', label: 'Entrevista' },
                   { key: 'BATE_PAPO', label: 'Bate-papo' },
                   { key: 'INDEFINIDO', label: 'Ainda não sei' },
-                ].map(option => (
-                  <button
-                    key={option.key}
-                    type="button"
-                    className={`px-3 py-2 rounded-full border font-semibold transition ${
-                      form.tipoPodcast === option.key
-                        ? 'border-brand-blue bg-brand-blue text-white shadow-md'
-                        : 'border-slate-300 bg-white text-brand-blue-dark hover:bg-brand-sand-soft'
-                    }`}
-                    onClick={() =>
-                      handleChange('tipoPodcast', option.key as TipoPodcast)
-                    }
-                  >
-                    {option.label}
-                  </button>
-                ))}
+                ].map(option => {
+                  const selected = form.tipoPodcast === option.key
+
+                  return (
+                    <button
+                      key={option.key}
+                      type="button"
+                      onClick={() =>
+                        handleChange('tipoPodcast', option.key as TipoPodcast)
+                      }
+                      className={`pill-toggle ${
+                        selected ? 'pill-toggle--active' : ''
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
@@ -205,28 +216,25 @@ export default function HomePage() {
                 Você já tem logo ou identidade visual?
               </p>
               <div className="flex gap-2 text-xs md:text-sm">
-                <button
-                  type="button"
-                  className={`px-4 py-2 rounded-full border font-semibold transition ${
-                    form.temLogo === 'SIM'
-                      ? 'border-brand-blue bg-brand-blue text-white shadow-md'
-                      : 'border-slate-300 bg-white text-brand-blue-dark hover:bg-brand-sand-soft'
-                  }`}
-                  onClick={() => handleChange('temLogo', 'SIM')}
-                >
-                  Sim
-                </button>
-                <button
-                  type="button"
-                  className={`px-4 py-2 rounded-full border font-semibold transition ${
-                    form.temLogo === 'NAO'
-                      ? 'border-brand-blue bg-brand-blue text-white shadow-md'
-                      : 'border-slate-300 bg-white text-brand-blue-dark hover:bg-brand-sand-soft'
-                  }`}
-                  onClick={() => handleChange('temLogo', 'NAO')}
-                >
-                  Não
-                </button>
+                {[
+                  { key: 'SIM', label: 'Sim' },
+                  { key: 'NAO', label: 'Não' },
+                ].map(option => {
+                  const selected = form.temLogo === option.key
+
+                  return (
+                    <button
+                      key={option.key}
+                      type="button"
+                      onClick={() => handleChange('temLogo', option.key)}
+                      className={`pill-toggle ${
+                        selected ? 'pill-toggle--active' : ''
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  )
+                })}
               </div>
             </div>
 

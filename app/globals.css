@@ -10,6 +10,7 @@
   --brand-blue: #003f63;
   --brand-blue-dark: #002b44;
   --brand-red: #e5443f;
+  --brand-greem: #25D366;
 
   /* tons auxiliares */
   --brand-sand: #f6e1c5;
@@ -93,4 +94,47 @@ button:disabled {
   cursor: default;
   transform: none;
   box-shadow: none;
+}
+
+.pill-toggle {
+  background-color: var(--brand-blue);
+  color: #ffffff;
+  border-radius: 999px;
+  border: 1px solid var(--brand-blue);
+  padding: 0.55rem 1.4rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.12s ease;
+}
+
+/* hover no estado base */
+.pill-toggle:hover {
+  background-color: var(--brand-blue-dark);
+  border-color: var(--brand-blue-dark);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+  transform: translateY(-1px);
+}
+
+/* estado ATIVO (selecionado) */
+.pill-toggle--active {
+  background-color: #ffffff;
+  color: var(--brand-blue-dark);
+  border-color: var(--brand-blue);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* hover no ativo (bem suave) */
+.pill-toggle--active:hover {
+  background-color: #ffffff;
+  color: var(--brand-blue-dark);
+  border-color: var(--brand-blue-dark);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
 }
