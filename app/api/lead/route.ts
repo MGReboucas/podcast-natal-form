@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 import prisma from '../../lib/prisma'
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const body = await request.json()
+    const body = await req.json()
 
     const {
       name,
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       horario,
     } = body
 
-    // validações básicas
+    // Validação bem básica pra evitar registro vazio
     if (!name || !whatsapp) {
       return NextResponse.json(
         {
@@ -28,45 +28,49 @@ export async function POST(request: Request) {
       )
     }
 
-    const tiposValidos = ['SOLO', 'ENTREVISTA', 'BATE_PAPO', 'INDEFINIDO']
-    const interessesValidos = ['UNICO', 'MENSAL']
-
-    if (!tiposValidos.includes(tipoPodcast)) {
-      return NextResponse.json(
-        { success: false, message: 'tipoPodcast inválido.' },
-        { status: 400 },
-      )
-    }
-
-    if (!interessesValidos.includes(interesse)) {
-      return NextResponse.json(
-        { success: false, message: 'interesse inválido.' },
-        { status: 400 },
-      )
-    }
-
     const lead = await prisma.lead.create({
       data: {
-        name,
-        whatsapp,
-        tipoPodcast,
+        name: String(name),
+        whatsapp: String(whatsapp),
+
+        // aqui você está usando string no schema (sem enum do Prisma)
+        tipoPodcast: String(tipoPodcast || 'INDEFINIDO'),
         temLogo: Boolean(temLogo),
-        interesse,
-        horas: horas ?? null,
-        vezesMes: vezesMes ?? null,
-        horasSessao: horasSessao ?? null,
-        horario: horario ?? null,
+        interesse: String(interesse || 'UNICO'),
+
+        horas: typeof horas === 'number' ? horas : horas ? Number(horas) : null,
+        vezesMes:
+          typeof vezesMes === 'number'
+            ? vezesMes
+            : vezesMes
+            ? Number(vezesMes)
+            : null,
+        horasSessao:
+          typeof horasSessao === 'number'
+            ? horasSessao
+            : horasSessao
+            ? Number(horasSessao)
+            : null,
+
+        horario: horario ? String(horario) : null,
       },
     })
 
-    // ✅ SEMPRE retornar algo em caso de sucesso
-    return NextResponse.json({ success: true, lead }, { status: 201 })
-  } catch (error) {
-    console.error('Erro ao salvar lead', error)
-
-    // ✅ E sempre retornar algo em caso de erro
     return NextResponse.json(
-      { success: false, message: 'Erro interno ao salvar lead.' },
+      {
+        success: true,
+        message: 'Lead salvo com sucesso.',
+        lead,
+      },
+      { status: 201 },
+    )
+  } catch (error) {
+    console.error('Erro ao salvar lead:', error)
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Erro interno ao salvar lead.',
+      },
       { status: 500 },
     )
   }
