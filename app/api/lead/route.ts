@@ -66,12 +66,19 @@ export async function POST(req: Request) {
       },
       { status: 201 },
     )
-  } catch (error) {
-    console.error('Erro ao salvar lead:', error)
+  } catch (err) {
+    console.error('Erro ao salvar lead:', err)
+    const errorMessage =
+      err instanceof Error
+        ? err.message
+        : typeof err === 'string'
+        ? err
+        : 'Erro desconhecido'
     return NextResponse.json(
       {
         success: false,
         message: 'Erro interno ao salvar lead.',
+        debug: errorMessage,
       },
       { status: 500 },
     )
