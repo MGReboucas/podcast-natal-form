@@ -3,27 +3,35 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+enum TipoPodcast {
+  SOLO
+  ENTREVISTA
+  BATE_PAPO
+  INDEFINIDO
+}
+
+enum Interesse {
+  UNICO
+  MENSAL
+}
+
 model Lead {
-  id           Int      @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   name         String
   whatsapp     String
 
-  // antes era TipoPodcast (enum)
-  tipoPodcast  String
-
+  tipoPodcast  TipoPodcast
   temLogo      Boolean
-
-  // antes era Interesse (enum)
-  interesse    String
+  interesse    Interesse
 
   horas        Int?
   vezesMes     Int?
   horasSessao  Int?
 
   horario      String?
-  createdAt    DateTime @default(now())
+  createdAt    DateTime  @default(now())
 }

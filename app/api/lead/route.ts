@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       )
     }
 
-    const lead = await prisma.lead.create({
+    const newLead = await prisma.lead.create({
       data: {
         name: String(name),
         whatsapp: String(whatsapp),
@@ -39,12 +39,14 @@ export async function POST(req: Request) {
         interesse: String(interesse || 'UNICO'),
 
         horas: typeof horas === 'number' ? horas : horas ? Number(horas) : null,
+
         vezesMes:
           typeof vezesMes === 'number'
             ? vezesMes
             : vezesMes
             ? Number(vezesMes)
             : null,
+
         horasSessao:
           typeof horasSessao === 'number'
             ? horasSessao
@@ -60,7 +62,7 @@ export async function POST(req: Request) {
       {
         success: true,
         message: 'Lead salvo com sucesso.',
-        lead,
+        lead: newLead,
       },
       { status: 201 },
     )
