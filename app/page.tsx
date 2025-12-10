@@ -19,7 +19,7 @@ interface LeadFormState {
 }
 
 export default function HomePage() {
-  const [form, setForm] = useState<LeadFormState>({
+  const initialFormState: LeadFormState = {
     name: '',
     whatsapp: '',
     tipoPodcast: 'INDEFINIDO',
@@ -29,7 +29,9 @@ export default function HomePage() {
     vezesMes: '',
     horasSessao: '',
     horario: '',
-  })
+  }
+
+  const [form, setForm] = useState<LeadFormState>(initialFormState)
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -80,9 +82,73 @@ export default function HomePage() {
         throw new Error(data.message || 'Erro ao enviar seus dados.')
       }
 
+      // 🔎 Mapeia valores para textos bonitos
+      const tipoPodcastLabel = (() => {
+        switch (form.tipoPodcast) {
+          case 'SOLO':
+            return 'Solo'
+          case 'ENTREVISTA':
+            return 'Entrevista'
+          case 'BATE_PAPO':
+            return 'Bate-papo'
+          default:
+            return 'Ainda não defini'
+        }
+      })()
+
+      const temLogoLabel = form.temLogo === 'SIM' ? 'Sim' : 'Não'
+
+      const interesseLabel =
+        form.interesse === 'UNICO'
+          ? 'Gravar apenas uma vez'
+          : 'Orçamento mensal (frequência)'
+
+      const parteUnico =
+        form.interesse === 'UNICO' && form.horas
+          ? `\nHoras de gravação (única): ${form.horas}h`
+          : ''
+
+      const parteMensal =
+        form.interesse === 'MENSAL'
+          ? `\nGravações por mês: ${
+              form.vezesMes ? form.vezesMes : 'não informado'
+            }\nHoras por sessão: ${
+              form.horasSessao ? form.horasSessao : 'não informado'
+            }`
+          : ''
+
+      const horarioLabel = form.horario
+        ? form.horario
+        : 'Não informou um horário preferido'
+
+      // 🧩 Mensagem final para o WhatsApp
+      const whatsappMessage = `
+Olá! Meu nome é ${form.name}.
+
+Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em gravar um podcast.
+
+📌 Tipo de podcast: ${tipoPodcastLabel}
+🎨 Já tenho logo/identidade visual? ${temLogoLabel}
+🎯 Interesse: ${interesseLabel}${parteUnico}${parteMensal}
+
+🕒 Melhor dia/horário para gravar: ${horarioLabel}
+
+📱 Meu WhatsApp informado no formulário: ${form.whatsapp}
+    `.trim()
+
+      const whatsappNumber = '5584998045201' // seu número com DDI + DDD
+      const encodedMessage = encodeURIComponent(whatsappMessage)
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`
+
+      // ✅ Limpa o formulário depois do envio bem-sucedido
+      setForm(initialFormState)
+
       setSuccess(
-        'Pronto! Recebemos suas informações e vamos falar com você em breve. 🎧',
+        'Pronto! Recebemos suas informações e vamos falar com você no WhatsApp. 🎧',
       )
+
+      // 🔁 Abre o WhatsApp com a mensagem preenchida
+      window.location.href = whatsappUrl
     } catch (err: any) {
       setError(err.message || 'Erro inesperado ao enviar formulário.')
     } finally {
