@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import prisma from '../../lib/prisma'
+import prisma from '../../lib/prisma' // ajuste o caminho se o lib estiver em outro lugar
 
 export async function POST(req: Request) {
   try {
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       horario,
     } = body
 
-    // Validação bem básica pra evitar registro vazio
+    // Validação básica
     if (!name || !whatsapp) {
       return NextResponse.json(
         {
@@ -33,10 +33,10 @@ export async function POST(req: Request) {
         name: String(name),
         whatsapp: String(whatsapp),
 
-        // aqui você está usando string no schema (sem enum do Prisma)
-        tipoPodcast: String(tipoPodcast || 'INDEFINIDO'),
+        // default simples, mas você pode validar antes
+        tipoPodcast: tipoPodcast ? String(tipoPodcast) : 'INDEFINIDO',
         temLogo: Boolean(temLogo),
-        interesse: String(interesse || 'UNICO'),
+        interesse: interesse ? String(interesse) : 'UNICO',
 
         horas: typeof horas === 'number' ? horas : horas ? Number(horas) : null,
 
@@ -66,19 +66,21 @@ export async function POST(req: Request) {
       },
       { status: 201 },
     )
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('Erro ao salvar lead:', err)
+
     const errorMessage =
       err instanceof Error
         ? err.message
         : typeof err === 'string'
         ? err
         : 'Erro desconhecido'
+
     return NextResponse.json(
       {
         success: false,
         message: 'Erro interno ao salvar lead.',
-        debug: errorMessage,
+        debug: errorMessage, // depois, em produção, você pode remover esse campo
       },
       { status: 500 },
     )
