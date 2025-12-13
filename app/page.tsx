@@ -184,16 +184,17 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
             </div>
 
             <h2 className="text-lg md:text-xl font-semibold text-brand-blue-dark mb-2">
-              Pronto para tirar seu podcast do papel?
+              Descubra quanto custa gravar seu podcast em Natal — orçamento
+              rápido e sem compromisso
             </h2>
             <p className="text-sm text-slate-800 mb-3">
-              Preencha rapidinho e vamos montar um orçamento que combina com o
-              seu projeto. É sem compromisso e leva menos de 30 segundos.
+              Leva menos de 30 segundos. Sem compromisso, sem ligação, sem
+              cartão.
             </p>
             <ul className="text-xs text-slate-800 space-y-1">
-              <li>• Áudio e vídeo em qualidade profissional</li>
-              <li>• Câmeras 4K, microfones premium e ambiente tratado</li>
-              <li>• Orientação para quem nunca gravou podcast</li>
+              <li>• 🎙️ Você só chega e grava — estrutura completa</li>
+              <li>• 🎥 Áudio profissional + câmeras 4K</li>
+              <li>• 🧠 Orientação para quem nunca gravou podcast</li>
             </ul>
 
             <a
@@ -203,13 +204,12 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
               className="mt-4 inline-block px-8 py-3 rounded-full text-white !text-white text-sm font-medium shadow 
              bg-[#25D366] hover:bg-[#128C7E] transition"
             >
-              Dúvidas? Fale conosco no WhatsApp
+              Pedir cotação agora
             </a>
           </div>
 
           <p className="mt-6 text-[11px] text-slate-600">
-            Suas informações estão seguras. Usamos apenas para preparar seu
-            orçamento.
+            🔒 Usamos seus dados apenas para preparar seu orçamento. Sem spam.
           </p>
         </div>
 
