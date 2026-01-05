@@ -150,19 +150,28 @@ Copiar código
 
 # Instalar dependências
 
+```
 npm install
+```
 
 # Gerar Prisma Client
 
+```
 npx prisma generate
+```
 
 # Rodar migrations
 
+```
 npx prisma migrate dev
+```
 
 # Iniciar o servidor
 
+```
 npm run dev
+```
+
 Acesse:
 
 arduino
