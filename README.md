@@ -1,36 +1,194 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎙️ Podcast Natal — Lead Form & Tracking
 
-## Getting Started
+Formulário de geração de leads do **Podcast Natal Studio**, desenvolvido em **Next.js + Prisma**, com foco em **conversão de anúncios (Meta Ads)** e **rastreamento de tráfego (UTM, pageview, campanhas)**.
 
-First, run the development server:
+Este projeto coleta leads de forma simples e envia o usuário diretamente para o WhatsApp após o envio, além de registrar eventos de navegação para análise de desempenho dos anúncios.
 
-```bash
+---
+
+## 🚀 Funcionalidades
+
+### ✅ Formulário de Orçamento
+
+- Coleta de:
+  - Nome
+  - WhatsApp
+  - Tipo de podcast
+  - Interesse (único ou mensal)
+  - Quantidade de horas / frequência
+  - Preferência de horário
+- Validação de campos obrigatórios
+- UX otimizada para mobile (Meta Ads / Instagram)
+
+### ✅ Integração com WhatsApp
+
+- Após o envio:
+  - Abre automaticamente o WhatsApp com mensagem pré-formatada
+  - Mensagem contém todas as escolhas do formulário
+- Reduz fricção e aumenta conversão
+
+### ✅ Rastreamento de Tráfego (Tracking)
+
+- Captura automática de:
+  - `pageview`
+  - `path`
+  - `userAgent`
+  - `referer`
+  - UTMs:
+    - `utm_source`
+    - `utm_campaign`
+    - `utm_adset`
+    - `utm_ad`
+    - `utm_medium`
+    - `utm_content`
+    - `utm_term`
+  - `fbclid` (quando disponível)
+- Evento salvo no banco via Prisma
+- Envio **1 vez por sessão** (controle com `sessionStorage`)
+
+### ✅ Backend com Prisma
+
+- Banco PostgreSQL (NeonDB)
+- Models:
+  - `Lead`
+  - `TrackingEvent`
+- API Routes:
+  - `/api/lead` → cria lead
+  - `/api/track` → registra eventos de tracking
+
+---
+
+## 🧱 Stack Utilizada
+
+- **Next.js 14 (App Router)**
+- **React**
+- **TypeScript**
+- **Prisma ORM**
+- **PostgreSQL (NeonDB)**
+- **TailwindCSS**
+- **WhatsApp API (wa.me)**
+
+---
+
+## 📁 Estrutura do Projeto
+
+podcast-natal-form/
+├── app/
+│ ├── api/
+│ │ ├── lead/
+│ │ │ └── route.ts # Criação de leads
+│ │ └── track/
+│ │ └── route.ts # Tracking de pageview e UTMs
+│ ├── layout.tsx
+│ └── page.tsx # Página do formulário
+├── lib/
+│ └── prisma.ts # Instância do Prisma Client
+├── prisma/
+│ ├── schema.prisma # Models do banco
+│ └── migrations/
+├── public/
+│ └── podcast-natal-logo.png
+├── .env
+├── package.json
+└── README.md
+
+kotlin
+Copiar código
+
+---
+
+## 🗄️ Models do Banco (Prisma)
+
+### Lead
+
+```prisma
+model Lead {
+  id          Int      @id @default(autoincrement())
+  name        String
+  whatsapp    String
+  tipoPodcast String
+  temLogo     Boolean
+  interesse   String
+  horas       Int?
+  vezesMes    Int?
+  horasSessao Int?
+  horario     String?
+  createdAt   DateTime @default(now())
+}
+TrackingEvent
+prisma
+Copiar código
+model TrackingEvent {
+  id           Int      @id @default(autoincrement())
+  type         String
+  path         String?
+  referer      String?
+  userAgent    String?
+  utmSource    String?
+  utmCampaign  String?
+  utmAdset     String?
+  utmAd        String?
+  utmMedium    String?
+  utmContent   String?
+  utmTerm      String?
+  fbclid       String?
+  createdAt    DateTime @default(now())
+}
+⚙️ Variáveis de Ambiente
+Crie um arquivo .env:
+
+env
+Copiar código
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
+▶️ Como Rodar o Projeto
+bash
+Copiar código
+# Instalar dependências
+npm install
+
+# Gerar Prisma Client
+npx prisma generate
+
+# Rodar migrations
+npx prisma migrate dev
+
+# Iniciar o servidor
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Acesse:
+
+arduino
+Copiar código
+http://localhost:3000
+📊 Uso com Meta Ads (Facebook / Instagram)
+Link do anúncio deve conter UTMs:
+
+text
+Copiar código
+https://seusite.com
+?utm_source=instagram
+&utm_campaign=campanha_x
+&utm_adset=adset_1
+&utm_ad=video_1
+O sistema registra:
+
+Cliques
+
+Origem
+
+Campanha
+
+Navegação
+
+Leads são associados ao tráfego indiretamente via timestamp
+
+🎯 Objetivo do Projeto
+Reduzir fricção no primeiro contato
+
+Capturar leads qualificados
+
+Medir eficiência de campanhas pagas
+
+Criar base para funil de conversão real
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+mgr.dev
