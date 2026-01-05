@@ -172,42 +172,6 @@ npx prisma migrate dev
 npm run dev
 ```
 
-Acesse:
-
-arduino
-Copiar código
-http://localhost:3000
-📊 Uso com Meta Ads (Facebook / Instagram)
-Link do anúncio deve conter UTMs:
-
-text
-Copiar código
-https://seusite.com
-?utm_source=instagram
-&utm_campaign=campanha_x
-&utm_adset=adset_1
-&utm_ad=video_1
-O sistema registra:
-
-Cliques
-
-Origem
-
-Campanha
-
-Navegação
-
-Leads são associados ao tráfego indiretamente via timestamp
-
-🎯 Objetivo do Projeto
-Reduzir fricção no primeiro contato
-
-Capturar leads qualificados
-
-Medir eficiência de campanhas pagas
-
-Criar base para funil de conversão real
-
 ```
 
 mgr.dev
