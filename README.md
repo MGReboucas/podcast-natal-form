@@ -72,6 +72,7 @@ Este projeto coleta leads de forma simples e envia o usuário diretamente para o
 
 ## 📁 Estrutura do Projeto
 
+```
 podcast-natal-form/
 ├── app/
 │ ├── api/
@@ -95,7 +96,7 @@ podcast-natal-form/
 kotlin
 Copiar código
 
----
+```
 
 ## 🗄️ Models do Banco (Prisma)
 
@@ -134,6 +135,9 @@ model TrackingEvent {
   fbclid       String?
   createdAt    DateTime @default(now())
 }
+
+```
+
 ⚙️ Variáveis de Ambiente
 Crie um arquivo .env:
 
@@ -143,16 +147,21 @@ DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
 ▶️ Como Rodar o Projeto
 bash
 Copiar código
+
 # Instalar dependências
+
 npm install
 
 # Gerar Prisma Client
+
 npx prisma generate
 
 # Rodar migrations
+
 npx prisma migrate dev
 
 # Iniciar o servidor
+
 npm run dev
 Acesse:
 
@@ -189,6 +198,8 @@ Capturar leads qualificados
 Medir eficiência de campanhas pagas
 
 Criar base para funil de conversão real
+
 ```
 
 mgr.dev
+```
