@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { FormEvent, useState } from 'react'
+import logo4MBusiness from '@/public/4m-business.png'
 
 type TipoPodcast = 'SOLO' | 'ENTREVISTA' | 'BATE_PAPO' | 'INDEFINIDO'
 type Interesse = 'UNICO' | 'MENSAL'
@@ -82,7 +83,6 @@ export default function HomePage() {
         throw new Error(data.message || 'Erro ao enviar seus dados.')
       }
 
-      // 🔎 Mapeia valores para textos bonitos
       const tipoPodcastLabel = (() => {
         switch (form.tipoPodcast) {
           case 'SOLO':
@@ -121,7 +121,6 @@ export default function HomePage() {
         ? form.horario
         : 'Não informou um horário preferido'
 
-      // 🧩 Mensagem final para o WhatsApp
       const whatsappMessage = `
 Olá! Meu nome é ${form.name}.
 
@@ -136,18 +135,16 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
 📱 Meu WhatsApp informado no formulário: ${form.whatsapp}
     `.trim()
 
-      const whatsappNumber = '5584998045201' // seu número com DDI + DDD
+      const whatsappNumber = '5584998045201'
       const encodedMessage = encodeURIComponent(whatsappMessage)
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`
 
-      // ✅ Limpa o formulário depois do envio bem-sucedido
       setForm(initialFormState)
 
       setSuccess(
         'Pronto! Recebemos suas informações e vamos falar com você no WhatsApp. 🎧',
       )
 
-      // 🔁 Abre o WhatsApp com a mensagem preenchida
       window.location.href = whatsappUrl
     } catch (err: any) {
       setError(err.message || 'Erro inesperado ao enviar formulário.')
@@ -201,22 +198,31 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
               href="https://wa.me/5584998045201?text=Ol%C3%A1%2C%20acabei%20de%20acessar%20o%20seu%20link%20e%20fiquei%20com%20uma%20d%C3%BAvida%20sobre%20o%20Podcast%20Natal."
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-block px-8 py-3 rounded-full text-white !text-white text-sm font-medium shadow 
+              className="mt-4 border-black inline-block px-8 py-3 rounded-full text-white !text-white text-sm font-medium shadow 
              bg-[#25D366] hover:bg-[#128C7E] transition"
             >
               Pedir cotação agora
             </a>
           </div>
 
-          <p className="mt-6 text-[11px] text-slate-600">
-            🔒 Usamos seus dados apenas para preparar seu orçamento. Sem spam.
-          </p>
+          <a
+            className="bg-white p-1 rounded-xl inline-block items-center mt-6 w-40 hover:shadow-xl transition"
+            href="https://www.4mbusinessmarketing.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src={logo4MBusiness}
+              alt="4M Business"
+              width={180}
+              height={60}
+              className="h-auto w-36 md:w-40"
+            />
+          </a>
         </div>
 
-        {/* LADO DIREITO – formulário */}
         <div className="md:w-7/12 bg-white p-6 md:p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Nome */}
             <div>
               <label className="block text-sm font-medium text-brand-blue-dark mb-1">
                 Nome
@@ -230,7 +236,6 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
               />
             </div>
 
-            {/* WhatsApp */}
             <div>
               <label className="block text-sm font-medium text-brand-blue-dark mb-1">
                 WhatsApp
@@ -244,7 +249,6 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
               />
             </div>
 
-            {/* Tipo de podcast */}
             <div>
               <p className="block text-sm font-medium text-brand-blue-dark mb-1">
                 Qual tipo de podcast você quer gravar?
@@ -276,7 +280,6 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
               </div>
             </div>
 
-            {/* Tem logo? */}
             <div>
               <p className="block text-sm font-medium text-brand-blue-dark mb-1">
                 Você já tem logo ou identidade visual?
@@ -304,7 +307,6 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
               </div>
             </div>
 
-            {/* Interesse */}
             <div>
               <p className="block text-sm font-medium text-brand-blue-dark mb-1">
                 Qual é seu interesse?
@@ -333,7 +335,6 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
               </div>
             </div>
 
-            {/* Campos condicionais */}
             {isInteresseUnico && (
               <div>
                 <label className="block text-sm font-medium text-brand-blue-dark mb-1">
@@ -392,7 +393,6 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
               </>
             )}
 
-            {/* Melhor dia/horário */}
             <div>
               <label className="block text-sm font-medium text-brand-blue-dark mb-1">
                 Melhor dia/horário para gravar
@@ -406,7 +406,6 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
               />
             </div>
 
-            {/* mensagens */}
             {error && (
               <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
                 {error}
@@ -418,7 +417,6 @@ Acabei de preencher o formulário do Podcast Natal Studio e tenho interesse em g
               </p>
             )}
 
-            {/* botão */}
             <button
               type="submit"
               disabled={isSubmitting}
